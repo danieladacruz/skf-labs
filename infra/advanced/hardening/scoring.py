@@ -6,6 +6,7 @@ import time
 import paramiko
 from mysql.connector import Error, errors
 from paramiko.ssh_exception import NoValidConnectionsError
+from security import safe_requests
 
 penalty_points = {}
 
@@ -55,7 +56,7 @@ def check_mysql_connection(host, user, password, timeout=10):
 
 def check_https(url, timeout=10):
     try:
-        response = requests.get(url, timeout=timeout)
+        response = safe_requests.get(url, timeout=timeout)
         if response.url.startswith("https://"):
             #print(f"{url}: HTTPS enabled.")
             return True
