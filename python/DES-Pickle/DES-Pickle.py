@@ -1,5 +1,6 @@
 import pickle
 from flask import Flask, request, render_template
+import fickling
 
 app = Flask(__name__, static_url_path='/static', static_folder='static')
 app.config['DEBUG'] = True
@@ -11,7 +12,7 @@ def start():
         with open('filename.pickle', 'wb') as handle:
             pickle.dump(user, handle, protocol=pickle.HIGHEST_PROTOCOL)
         with open('filename.pickle', 'rb') as handle:
-            a = pickle.load(handle)
+            a = fickling.load(handle)
         return render_template("index.html", content = a)
 
 
@@ -23,7 +24,7 @@ def deserialization():
             file.write(attack)
             file.close()
         with open('pickle.hacker', 'rb') as handle:
-            a = pickle.load(handle)
+            a = fickling.load(handle)
             print(attack)
             return render_template("index.html", content = a)
 
