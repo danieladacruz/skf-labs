@@ -21,7 +21,7 @@ def login():
             username=values[0][0]
             if values[0][1] == request.form['password']:
                 res = make_response(render_template("loggedin.html",username=username,msg=msg))
-                res.set_cookie("sessionid", hashlib.sha1(username.encode('utf-8')+'SKFowaspLabs'.encode('utf-8')).hexdigest())
+                res.set_cookie("sessionid", hashlib.sha1(username.encode('utf-8')+'SKFowaspLabs'.encode('utf-8')).hexdigest(), secure=True, httponly=True, samesite='Lax')
                 return res
             else:
                 return render_template("index.html")
@@ -92,7 +92,7 @@ def logout():
     if request.method == "GET":
         txt='You successfully logged out'
         res = make_response(render_template('index.html',msg=txt))
-        res.set_cookie('sessionid', '', expires=0)
+        res.set_cookie('sessionid', '', expires=0, secure=True, httponly=True, samesite='Lax')
         return res
     txt="You are not logged out"
     return render_template('index.html',msg=txt)

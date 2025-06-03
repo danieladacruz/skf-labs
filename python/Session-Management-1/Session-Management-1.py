@@ -117,13 +117,13 @@ def validateUserLoginRequest(request):
 def createSuccessfulLoggedInResponse(request):
     username = getLoginRequestUsername(request)
     response = make_response(redirect("/panel"))
-    response.set_cookie("sessionid", base64.b64encode(username.encode()))
+    response.set_cookie("sessionid", base64.b64encode(username.encode()), secure=True, httponly=True, samesite='Lax')
     return response
 
 
 def createSuccessfulLogoffResponse(request):
     response = make_response(redirect("/"))
-    response.set_cookie('sessionid', '', expires=0)
+    response.set_cookie('sessionid', '', expires=0, secure=True, httponly=True, samesite='Lax')
     return response
 
 

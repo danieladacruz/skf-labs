@@ -31,7 +31,7 @@ def login():
                 pref = sqli.getApi(values[0][0])
                 api = pref[0][0]
                 resp = make_response(render_template("loggedin.html", api = api))
-                resp.set_cookie('userId', '1')
+                resp.set_cookie('userId', '1', secure=True, httponly=True, samesite='Lax')
                 return resp
         return render_template("index.html")
     else:

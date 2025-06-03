@@ -45,7 +45,7 @@ def login():
                         ser = pickle.dumps(u1)
                         b64 = base64.b64encode(ser)
                         res = make_response(render_template("loggedin.html"))
-                        res.set_cookie("rememberme", b64, 60*60*24*15)
+                        res.set_cookie("rememberme", b64, 60*60*24*15, secure=True, httponly=True, samesite='Lax')
                         return res
                 else:
                     return render_template("loggedin.html")
@@ -75,7 +75,7 @@ def update():
         if 'logout' in request.form['action'] :
             session['loggedin']= None
             res = make_response(render_template("index.html"))
-            res.set_cookie('rememberme', '', expires=0)
+            res.set_cookie('rememberme', '', expires=0, secure=True, httponly=True, samesite='Lax')
             return res
         else:
             return render_template('index.html')

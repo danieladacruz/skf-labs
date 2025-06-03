@@ -51,7 +51,7 @@ def login():
             values   = sqli.validateUser(username, password) # Unsafe Function!
             if values:
                 response = make_response(render_template("loggedin.html", username=values[0][0], msg="Congratulations!"))
-                response.set_cookie("sessionid", hashlib.sha1(username.encode('utf-8')).hexdigest())
+                response.set_cookie("sessionid", hashlib.sha1(username.encode('utf-8')).hexdigest(), secure=True, httponly=True, samesite='Lax')
                 return response
         except Exception as e:
             return render_template("500.html", error=str(e))
@@ -82,7 +82,7 @@ def logout():
     if request.method == "GET":
         text     = 'You successfully logged out'
         response = make_response(render_template('index.html',msg=text))
-        response.set_cookie('sessionid', '', expires=0)
+        response.set_cookie('sessionid', '', expires=0, secure=True, httponly=True, samesite='Lax')
         return response
     text = "You are not logged out"
     return render_template('index.html', msg=text)

@@ -31,7 +31,7 @@ def login():
             userId = str(values[0][0])
             session['loggedin'] = True
             resp = make_response(redirect(url_for("home")))
-            resp.set_cookie("userId", value=userId)
+            resp.set_cookie("userId", value=userId, secure=True, httponly=True, samesite='Lax')
             return resp
     return render_template("index.html")
 

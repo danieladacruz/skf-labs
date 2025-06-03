@@ -222,8 +222,8 @@ def login():
             query_api_key = db.session.query(UserInfo).filter_by(user=user.uuid)
             user_info = query_api_key.first()
             response = make_response(redirect('/'))
-            response.set_cookie('X-Api-Key', user_info.api_key)
-            response.set_cookie('uuid', str(user_info.user))          
+            response.set_cookie('X-Api-Key', user_info.api_key, secure=True, httponly=True, samesite='Lax')
+            response.set_cookie('uuid', str(user_info.user), secure=True, httponly=True, samesite='Lax')          
             return response
         else:
             return render_template("login.html",error="username or password are not correct") 

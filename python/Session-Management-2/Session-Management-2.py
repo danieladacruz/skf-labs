@@ -148,8 +148,8 @@ def createSuccessfulLoggedInResponse(request):
     username  = getLoginRequestUsername(request)
     isAdmin   = '1' if isUserAdmin(username) else '0'
     response = make_response(redirect("/panel"))
-    response.set_cookie("SessionId", sessionId)
-    response.set_cookie("IsAdmin", isAdmin.encode())
+    response.set_cookie("SessionId", sessionId, secure=True, httponly=True, samesite='Lax')
+    response.set_cookie("IsAdmin", isAdmin.encode(), secure=True, httponly=True, samesite='Lax')
     return [sessionId, response]
 
 
@@ -160,7 +160,7 @@ def createSuccessfulLogoffResponse(request):
     except:
         pass
     response = make_response(redirect("/"))
-    response.set_cookie('SessionId', '', expires=0)
+    response.set_cookie('SessionId', '', expires=0, secure=True, httponly=True, samesite='Lax')
     return response
 
 

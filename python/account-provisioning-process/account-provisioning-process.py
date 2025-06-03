@@ -36,7 +36,7 @@ def home():
 
     if "id" not in session:
         res = make_response(render_template("index.html", user=username))
-        res.set_cookie('role', 'guest')
+        res.set_cookie('role', 'guest', secure=True, httponly=True, samesite='Lax')
         return res
 
     return render_template("index.html", user=username, role=role)
@@ -71,7 +71,7 @@ def login_route():
             session['username'] = user["username"]
             res = make_response(
                 dumps({"message": "User logged in"}, default=str))
-            res.set_cookie('role', user["role"])
+            res.set_cookie('role', user["role"], secure=True, httponly=True, samesite='Lax')
             return res
         else:
             error = "Invalid username or password"
@@ -82,7 +82,7 @@ def login_route():
 def logout():
     session.clear()
     res = make_response(redirect(url_for('home')))
-    res.set_cookie('role', 'guest')
+    res.set_cookie('role', 'guest', secure=True, httponly=True, samesite='Lax')
     return res
 
 
@@ -113,7 +113,7 @@ def admin_panel():
         return render_template("admin-panel.html", role=role, customers=get_customers())
     if "id" not in session:
         res = make_response(render_template("admin-panel.html", role=role))
-        res.set_cookie('role', 'guest')
+        res.set_cookie('role', 'guest', secure=True, httponly=True, samesite='Lax')
         return res
 
 
