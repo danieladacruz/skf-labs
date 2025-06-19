@@ -38,14 +38,14 @@ class ContentLengthFrontEndServer(BaseHTTPRequestHandler):
 
     def do_GET(self):
         request_url = get_backend_server() + self.path[1:]
-        response = get(request_url, headers=self.headers)
+        response = get(request_url, headers=self.headers, timeout=60)
         self.send_status_header(response.status_code)
         self.wfile.write(response.content)
 
     def do_POST(self):
         request_url = get_backend_server() + self.path[1:]
         request_data = self.get_POST_data()
-        response = post(request_url, data=request_data, headers=self.headers)
+        response = post(request_url, data=request_data, headers=self.headers, timeout=60)
         self.send_status_header(response.status_code)
         self.wfile.write(response.content)
 

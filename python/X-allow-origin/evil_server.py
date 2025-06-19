@@ -12,12 +12,12 @@ def start():
 
 @app.route("/allowed", methods=['GET'])
 def allowed():
-    content = requests.get('http://0.0.0.0:5000/allowed').content
+    content = requests.get('http://0.0.0.0:5000/allowed', timeout=60).content
     return render_template('index.html', content = content)
 
 @app.route("/protected", methods=['GET'])
 def protected():
-    content = requests.get('http://0.0.0.0:5000/protected').content
+    content = requests.get('http://0.0.0.0:5000/protected', timeout=60).content
     return render_template('index.html', content = content)
 
 

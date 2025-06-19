@@ -20,10 +20,10 @@ def cmd():
         if "http" not in str(urlparse(filename).scheme):
             host = request.url[:-4]
             filename = host+"/static/" + filename
-            result = eval(requests.get(filename).text)
+            result = eval(requests.get(filename, timeout=60).text)
             return render_template("index.html", result=result)
         else:
-            result = eval(requests.get(filename).text)
+            result = eval(requests.get(filename, timeout=60).text)
             return render_template("index.html", result=result)
     except Exception:
         return render_template("index.html", result="Unexpected error during the execution of the predefined command.")

@@ -35,7 +35,7 @@ def login(password):
         "captcha": captcha
     }
 
-    res = post(url, json=login_body)
+    res = post(url, json=login_body, timeout=60)
     return res.json()
 
 
