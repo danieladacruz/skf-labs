@@ -24,7 +24,8 @@ from config import Config
 import logging
 from http.server import HTTPServer
 from http.server import BaseHTTPRequestHandler
-from requests import get, post
+from requests import post
+from security import safe_requests
 
 
 logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
@@ -38,7 +39,7 @@ class ContentLengthFrontEndServer(BaseHTTPRequestHandler):
 
     def do_GET(self):
         request_url = get_backend_server() + self.path[1:]
-        response = get(request_url, headers=self.headers)
+        response = safe_requests.get(request_url, headers=self.headers)
         self.send_status_header(response.status_code)
         self.wfile.write(response.content)
 
