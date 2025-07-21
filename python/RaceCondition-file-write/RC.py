@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
-from flask import Flask, render_template, send_file, make_response
+from flask import Flask, render_template, make_response
+import flask
+from pathlib import Path
 
 app = Flask(__name__, static_url_path='/static', static_folder='static')
 app.config['DEBUG'] = True
@@ -18,7 +20,7 @@ def home(value):
         f.closed
         f.closed
     file = open("shared-file.txt", "r") 
-    response = make_response(send_file("shared-file.txt", download_name="shared-file.txt"))
+    response = make_response(flask.send_from_directory((p := Path("shared-file.txt")).parent, p.name, download_name="shared-file.txt"))
     response.headers.set("Content-Type", "text/html; charset=utf-8")
     response.headers.set("Content-Disposition", "attachment; filename=shared-file.txt")
     return response
