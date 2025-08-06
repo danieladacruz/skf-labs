@@ -1,6 +1,7 @@
-from xml.dom.pulldom import START_ELEMENT, parseString
+from xml.dom.pulldom import START_ELEMENT
 import xml
 from flask import Flask, render_template, request
+import defusedxml.pulldom
 
 app = Flask(__name__, static_url_path='/static', static_folder='static')
 app.config['DEBUG'] = True
@@ -13,7 +14,7 @@ def start():
 
 @app.route("/home", methods=['POST', 'GET'])
 def xxe():
-    doc = parseString(request.form['xxe'])
+    doc = defusedxml.pulldom.parseString(request.form['xxe'])
     try:
         for event, node in doc:
             if event == START_ELEMENT and node.localName == "items":
